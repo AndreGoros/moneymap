@@ -8,9 +8,6 @@ Ejecutar:
 import sys
 import os
 
-# Permite correr el demo desde cualquier lugar apuntando a la carpeta del proyecto
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "moneymap"))
-
 from moneymap import (
     convertir,
     impuesto,
