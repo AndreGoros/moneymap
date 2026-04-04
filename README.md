@@ -247,8 +247,6 @@ ayuda("paises_disponibles")
 | CNY    | Yuan chino          | INR    | Rupia india     |
 | AUD    | Dólar australiano   | ...    | y más           |
 
-> **Nota:** Las tasas de cambio incluidas son valores de referencia aproximados.
-> Para producción se recomienda actualizar con `registrar_tasa()` usando una API en tiempo real.
 
 ---
 
