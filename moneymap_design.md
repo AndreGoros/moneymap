@@ -1,6 +1,3 @@
-> **El documento de diseño es tu entregable para este módulo.** Créalo como un archivo markdown en tu directorio de estudiante.
-
----
 
 ## Librería: MoneyMap
 
