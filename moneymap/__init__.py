@@ -9,7 +9,7 @@ Uso básico:
     convertir(1000, "MXN", "USD")   # Decimal('58.65')
     impuesto(1000, "Mexico")        # Decimal('160.00')
 
-Integración con pandas (requiere: pip install moneymap[pandas]):
+Integración con pandas y/o con polars (requiere: pip install moneymap[pandas], pip install moneymap[polars], pip install moneymap[pandas,polars]):
     import moneymap.dataframe  # activa df.moneymap
     df.moneymap.convertir(col="precio", origen="MXN", destino="USD")
 
@@ -50,4 +50,5 @@ __all__ = [
     "MontoInvalidoError",
     # Módulos opcionales (no se importan aquí para no forzar dependencias)
     # "dataframe"  →  import moneymap.dataframe  (requiere pandas)
+    # "polars" →  import moneymap.polars  (requiere polars)
 ]
