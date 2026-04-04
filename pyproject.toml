@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta" 
+
+[project]
+name = "moneymap"
+version = "0.1.0"
+description = "Conversión de divisas y cálculo de impuestos con precisión decimal exacta"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "MoneyMap Contributors" }
+]
+keywords = ["finanzas", "divisas", "impuestos", "conversión", "decimal", "iva", "vat"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Office/Business :: Financial",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+pandas = [
+    "pandas>=1.5",
+]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0",
+    "pandas>=1.5",
+]
+
+[project.urls]
+Homepage = "https://github.com/AndreGoros/moneymap"
+Repository = "https://github.com/AndreGoros/moneymap"
+"Bug Tracker" = "https://github.com/AndreGoros/moneymap/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["moneymap*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+ignore_missing_imports = true
