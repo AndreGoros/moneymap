@@ -145,14 +145,20 @@ def registrar_tasa(
     if valor_tasa <= 0:
         raise TasaInvalidaError(tasa, "La tasa debe ser mayor que cero.")
 
-    # Normalizar a equivalencia en USD
+    # Normalizar a equivalencia en USD.
+    # tasa         = cuántas `divisa`     hay por 1 `referencia`
+    # tasa_usd_ref = cuántas `referencia`  hay por 1 USD
+    # => cuántas `divisa` hay por 1 USD = tasa * tasa_usd_ref
+    #
+    # Ejemplo: registrar_tasa("MXN", "JPY", 0.10)
+    #   tasa         = 0.10   (1 JPY = 0.10 MXN)
+    #   tasa_usd_ref = 149.50 (1 USD = 149.50 JPY)
+    #   resultado    = 0.10 * 149.50 = 14.95 MXN por USD  correcto
     tasa_usd_referencia = _TASAS_BASE[referencia]
     if referencia == "USD":
         _TASAS_BASE[divisa] = valor_tasa
     else:
-        # tasa = cuántas `divisa` hay por 1 `referencia`
-        # necesitamos cuántas `divisa` hay por 1 USD
-        _TASAS_BASE[divisa] = valor_tasa / tasa_usd_referencia
+        _TASAS_BASE[divisa] = valor_tasa * tasa_usd_referencia
 
 
 def divisas_disponibles() -> list[str]:
