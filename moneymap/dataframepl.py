@@ -1,5 +1,5 @@
 """
-moneymap.polars
+moneymap.dataframepl
 ~~~~~~~~~~~~~~~
 Integración de MoneyMap con Polars.
 
