@@ -1,0 +1,6 @@
+# Dependencias para la imagen Docker de MoneyMap
+# Instala MoneyMap desde PyPI con soporte para pandas y polars
+
+moneymap[pandas,polars]
+pytest>=7.0
+pytest-cov>=4.0
