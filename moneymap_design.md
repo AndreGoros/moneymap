@@ -1,9 +1,12 @@
 
+---
+
 ## Librería: MoneyMap
+Ricardo André Gorost
 
 ### Problema
 
-Gestionar conversiones entre divisas internacionales, calcular deducciones fiscales (impuestos) y operar sobre columnas de DataFrames de pandas y Polars de forma precisa, evitando los errores de redondeo comunes al usar números de punto flotante (`float`) en aplicaciones financieras.
+Gestionar conversiones entre divisas internacionales, calcular deducciones fiscales (impuestos) y operar sobre columnas de DataFrames de Pandas y Polars de forma precisa, evitando los errores de redondeo comunes al usar números de punto flotante (`float`) en aplicaciones financieras.
 
 ### Quantum
 
@@ -70,7 +73,7 @@ ayuda("convertir")            # detalle con argumentos y ejemplo
 
 # 5. Accessor de pandas
 import pandas as pd
-import moneymap.dataframe  # activa df.moneymap
+import moneymap.dataframepd  # activa df.moneymap
 
 df = pd.DataFrame({"producto": ["Laptop", "Monitor"], "precio": [25000, 8500]})
 
@@ -85,7 +88,7 @@ df = df.moneymap.resumen_fiscal(col="precio", pais="España")
 
 # 6. Funciones de Polars — DataFrame y LazyFrame
 import polars as pl
-import moneymap.polars as mm
+import moneymap.dataframepl as mm
 
 df_pl = pl.DataFrame({"producto": ["Laptop", "Monitor"], "precio": [25000, 8500]})
 
