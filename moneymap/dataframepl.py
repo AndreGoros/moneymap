@@ -10,7 +10,7 @@ el DataFrame como primer argumento y devuelven uno nuevo.
 Modos de uso:
 
     # 1. DataFrame — agrega columna y devuelve DataFrame nuevo
-    import moneymap.polars as mm
+    import moneymap.dataframepl as mm
     df = mm.convertir(df, col="precio", origen="MXN", destino="USD")
 
     # 2. LazyFrame — mismo API, evaluación diferida
