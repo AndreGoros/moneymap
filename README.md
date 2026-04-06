@@ -5,8 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/AndreGoros/moneymap/blob/main/LICENSE)
 > Conversión de divisas y cálculo de impuestos con **precisión decimal exacta**.
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AndreGoros/moneymap/blob/main/moneymap_design.md)
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AndreGoros/moneymap/blob/main/moneymap_design.md)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AndreGoros/moneymap/blob/main/tutorial.ipynb)
 
 MoneyMap resuelve el problema de los errores de redondeo al trabajar con dinero en Python. Usa el tipo `Decimal` de la librería estándar para garantizar que nunca pierdas un centavo en tus cálculos.
 
