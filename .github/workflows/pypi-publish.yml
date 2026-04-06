@@ -1,8 +1,9 @@
 name: Publish MoneyMap to PyPI
 
 on:
-  release:
-    types: [published] # Se activa solo cuando creas una "Release" en GitHub
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   deploy:
