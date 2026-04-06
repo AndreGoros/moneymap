@@ -322,18 +322,6 @@ El repositorio incluye un workflow en  que:
 1. **En cada push o PR a ** — corre los tests en Python 3.10, 3.11 y 3.12.
 2. **Al crear un tag ** — construye la distribución y la publica automáticamente en PyPI.
 
-```bash
-# Para publicar una nueva versión:
-# 1. Actualiza la versión en pyproject.toml
-# 2. Haz commit y push
-git tag v0.1.1
-git push origin v0.1.1
-# GitHub Actions se encarga del resto
-```
-
-Requiere configurar **Trusted Publishing** en PyPI (sin necesidad de API tokens):
-[pypi.org/manage/account/publishing](https://pypi.org/manage/account/publishing/)
-
 ---
 
 ## Licencia
