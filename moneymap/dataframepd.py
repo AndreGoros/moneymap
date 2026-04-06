@@ -1,5 +1,5 @@
 """
-moneymap.dataframe
+moneymap.dataframepd
 ~~~~~~~~~~~~~~~~~~
 Accessor de pandas para MoneyMap.
 
@@ -8,7 +8,7 @@ operaciones financieras directamente sobre columnas de montos.
 
 Uso:
     import pandas as pd
-    import moneymap.dataframe  # registra el accessor
+    import moneymap.dataframepd  # registra el accessor
 
     df.moneymap.convertir(col="precio", origen="MXN", destino="USD")
     df.moneymap.impuesto(col="precio", pais="Mexico")
