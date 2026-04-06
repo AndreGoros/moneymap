@@ -178,7 +178,7 @@ def demo_pandas() -> None:
 
     try:
         import pandas as pd
-        import moneymap.dataframe
+        import moneymap.dataframepd
     except ImportError:
         info("pandas no instalado. Ejecuta: pip install moneymap[pandas]")
         return
