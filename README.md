@@ -1,6 +1,12 @@
 # MoneyMap
-
+[![CI](https://github.com/AndreGoros/moneymap/actions/workflows/ci.yml/badge.svg)](https://github.com/AndreGoros/moneymap/actions/workflows/ci)
+[![PyPI](https://img.shields.io/pypi/v/moneymap.svg)](https://pypi.org/project/moneymap/)
+[![Python](https://img.shields.io/pypi/pyversions/moneymap.svg)](https://pypi.org/project/moneymap/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/AndreGoros/moneymap/blob/main/LICENSE)
 > Conversión de divisas y cálculo de impuestos con **precisión decimal exacta**.
+
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AndreGoros/moneymap/blob/main/moneymap_design.md)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/AndreGoros/moneymap/blob/main/moneymap_design.md)
 
 MoneyMap resuelve el problema de los errores de redondeo al trabajar con dinero en Python. Usa el tipo `Decimal` de la librería estándar para garantizar que nunca pierdas un centavo en tus cálculos.
 
@@ -114,7 +120,7 @@ Activa el accessor importando el módulo una vez. Todas las operaciones son no d
 
 ```python
 import pandas as pd
-import moneymap.dataframe  # activa df.moneymap
+import moneymap.dataframepd  # activa df.moneymap
 
 df = pd.DataFrame({
     "producto": ["Laptop", "Monitor", "Teclado"],
@@ -163,7 +169,7 @@ Polars no tiene sistema de accessors, por lo que la integración usa funciones q
 
 ```python
 import polars as pl
-import moneymap.polars as mm
+import moneymap.dataframepl as mm
 ```
 
 ### DataFrame y LazyFrame
@@ -247,6 +253,8 @@ ayuda("paises_disponibles")
 | CNY    | Yuan chino          | INR    | Rupia india     |
 | AUD    | Dólar australiano   | ...    | y más           |
 
+> **Nota:** Las tasas de cambio incluidas son valores de referencia aproximados.
+> Para producción se recomienda actualizar con `registrar_tasa()` usando una API en tiempo real.
 
 ---
 
@@ -272,6 +280,60 @@ Más de 35 países de América Latina, Europa y Asia, incluyendo:
 from decimal import Decimal
 Decimal("0.1") + Decimal("0.2") == Decimal("0.3")  # True
 ```
+
+---
+
+## Docker
+
+Ejecutar MoneyMap sin instalar nada localmente:
+
+```bash
+# Build
+docker build -t moneymap .
+
+# Ejecutar el demo completo
+docker run --rm moneymap
+
+# Ejecutar los tests
+docker run --rm moneymap pytest
+
+# Shell interactivo
+docker run --rm -it moneymap bash
+```
+
+---
+
+## Desarrollo
+
+```bash
+git clone https://github.com/AndreGoros/moneymap
+cd moneymap
+pip install -e ".[dev]"
+pytest
+pytest --cov=moneymap --cov-report=term-missing
+ruff check moneymap/
+```
+
+---
+
+## Flujo de publicación (GitHub Actions)
+
+El repositorio incluye un workflow en  que:
+
+1. **En cada push o PR a ** — corre los tests en Python 3.10, 3.11 y 3.12.
+2. **Al crear un tag ** — construye la distribución y la publica automáticamente en PyPI.
+
+```bash
+# Para publicar una nueva versión:
+# 1. Actualiza la versión en pyproject.toml
+# 2. Haz commit y push
+git tag v0.1.1
+git push origin v0.1.1
+# GitHub Actions se encarga del resto
+```
+
+Requiere configurar **Trusted Publishing** en PyPI (sin necesidad de API tokens):
+[pypi.org/manage/account/publishing](https://pypi.org/manage/account/publishing/)
 
 ---
 
