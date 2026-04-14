@@ -245,6 +245,7 @@ df.with_columns(
 }
 
 
+
 def _imprimir_general() -> None:
     ancho = 58
     print()
@@ -255,7 +256,7 @@ def _imprimir_general() -> None:
 
     secciones = [
         ("Divisas", ["convertir", "registrar_tasa", "divisas_disponibles"]),
-        ("Impuestos", ["impuesto", "total_con_impuesto", "tasa_fiscal", "paises_disponibles"])
+        ("Impuestos", ["impuesto", "total_con_impuesto", "tasa_fiscal", "paises_disponibles"]),
         ("pandas", ["dataframepd"]),
         ("Polars", ["dataframepl"]),
     ]
@@ -266,7 +267,8 @@ def _imprimir_general() -> None:
             info = _AYUDA[nombre]
             firma = info["firma"]
             desc  = info["desc"].split(".")[0]  # primera oración
-            print(f"    {GREEN}{nombre}{RESET}{DIM}({firma.split('(')[1]}{RESET}")
+            firma_args = "(" + firma.split("(")[1] if "(" in firma else firma
+            print(f"    {GREEN}{nombre}{RESET}{DIM}{firma_args}{RESET}")
             print(f"      {DIM}{desc}.{RESET}")
         print()
 
