@@ -267,7 +267,12 @@ def _imprimir_general() -> None:
             info = _AYUDA[nombre]
             firma = info["firma"]
             desc  = info["desc"].split(".")[0]  # primera oración
-            firma_args = "(" + firma.split("(")[1] if "(" in firma else firma
+            if "→" in firma:
+                firma_args = ""
+            elif "(" in firma:
+                firma_args = "(" + firma.split("(")[1]
+            else:
+                firma_args = firma
             print(f"    {GREEN}{nombre}{RESET}{DIM}{firma_args}{RESET}")
             print(f"      {DIM}{desc}.{RESET}")
         print()
