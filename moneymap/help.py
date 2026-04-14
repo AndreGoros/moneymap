@@ -153,6 +153,95 @@ paises_disponibles()
 # → ['Alemania', 'Argentina', 'Australia', 'Austria',
 #     'Belgica', 'Bolivia', 'Brasil', 'Canada', ...]""",
     },
+
+    "dataframepd": {
+        "firma": "import moneymap.dataframepd  →  df.moneymap.*",
+        "desc":  (
+            "Accessor de pandas que extiende DataFrame con operaciones financieras. "
+            "Se activa importando el módulo una vez. Todas las operaciones agregan "
+            "columnas nuevas sin modificar el original y son encadenables."
+        ),
+        "args": [
+            ("col",       "str", "Nombre de la columna de montos a operar."),
+            ("origen",    "str", "Código ISO de divisa origen (solo en convertir)."),
+            ("destino",   "str", "Código ISO de divisa destino (solo en convertir)."),
+            ("pais",      "str", "País cuya tasa fiscal se aplicará."),
+            ("resultado", "str", "Nombre opcional para la columna de salida."),
+        ],
+        "retorna": "pd.DataFrame — nuevo DataFrame con la columna agregada.",
+        "lanza": [
+            ("KeyError",               "Si la columna no existe en el DataFrame."),
+            ("DivisaNoSoportadaError", "Si la divisa no está registrada."),
+            ("PaisNoSoportadoError",   "Si el país no tiene reglas fiscales."),
+        ],
+        "ejemplo": """\
+import pandas as pd
+import moneymap.dataframepd  # activa df.moneymap
+
+df = pd.DataFrame({"producto": ["Laptop", "Mouse"], "precio": [25000, 350]})
+
+df.moneymap.convertir(col="precio", origen="MXN", destino="USD")
+# → agrega columna precio_USD
+
+df.moneymap.impuesto(col="precio", pais="Mexico")
+# → agrega columna precio_impuesto  (IVA 16%)
+
+df.moneymap.resumen_fiscal(col="precio", pais="España")
+# → agrega precio_impuesto + precio_total + precio_tasa_pct
+
+# Encadenado
+(df
+ .moneymap.convertir(col="precio", origen="MXN", destino="USD")
+ .moneymap.impuesto(col="precio_USD", pais="USA")
+ .moneymap.total_con_impuesto(col="precio_USD", pais="USA"))""",
+    },
+
+    "dataframepl": {
+        "firma": "import moneymap.dataframepl as mm  →  mm.*(df, ...)",
+        "desc":  (
+            "Funciones para operar sobre DataFrame y LazyFrame de Polars. "
+            "Polars no tiene accessors, así que se usan funciones que reciben "
+            "el frame como primer argumento. Las funciones expr_* devuelven "
+            "pl.Expr para usar en .with_columns() o .select()."
+        ),
+        "args": [
+            ("df",      "pl.DataFrame | pl.LazyFrame", "Frame a operar."),
+            ("col",     "str",                         "Nombre de la columna de montos."),
+            ("origen",  "str",                         "Código ISO de divisa origen (solo en convertir)."),
+            ("destino", "str",                         "Código ISO de divisa destino (solo en convertir)."),
+            ("pais",    "str",                         "País cuya tasa fiscal se aplicará."),
+        ],
+        "retorna": "pl.DataFrame | pl.LazyFrame — mismo tipo que el recibido, con columna nueva.",
+        "lanza": [
+            ("DivisaNoSoportadaError", "Si la divisa no está registrada."),
+            ("PaisNoSoportadoError",   "Si el país no tiene reglas fiscales."),
+        ],
+        "ejemplo": """\
+import polars as pl
+import moneymap.dataframepl as mm
+
+df = pl.DataFrame({"producto": ["Laptop", "Mouse"], "precio": [25000, 350]})
+
+mm.convertir(df, col="precio", origen="MXN", destino="USD")
+# → agrega columna precio_USD
+
+mm.resumen_fiscal(df, col="precio", pais="España")
+# → agrega precio_impuesto + precio_total + precio_tasa_pct
+
+# LazyFrame — evaluación diferida
+(df.lazy()
+ .pipe(mm.convertir, col="precio", origen="MXN", destino="USD")
+ .pipe(mm.impuesto,  col="precio_USD", pais="USA")
+ .collect())
+
+# Expresiones — varias columnas en una sola pasada
+df.with_columns(
+    mm.expr_convertir("precio", "MXN", "USD").alias("precio_USD"),
+    mm.expr_convertir("precio", "MXN", "EUR").alias("precio_EUR"),
+    mm.expr_impuesto("precio", "Mexico").alias("iva"),
+    mm.expr_total_con_impuesto("precio", "Mexico").alias("precio_total"),
+)""",
+    },
 }
 
 
@@ -166,7 +255,9 @@ def _imprimir_general() -> None:
 
     secciones = [
         ("Divisas", ["convertir", "registrar_tasa", "divisas_disponibles"]),
-        ("Impuestos", ["impuesto", "total_con_impuesto", "tasa_fiscal", "paises_disponibles"]),
+        ("Impuestos", ["impuesto", "total_con_impuesto", "tasa_fiscal", "paises_disponibles"])
+        ("pandas", ["dataframepd"]),
+        ("Polars", ["dataframepl"]),
     ]
 
     for titulo, funciones in secciones:
@@ -183,6 +274,8 @@ def _imprimir_general() -> None:
     print(f"  {CYAN}  from moneymap import convertir, impuesto, registrar_tasa{RESET}")
     print(f"  {CYAN}  from moneymap import divisas_disponibles, paises_disponibles{RESET}")
     print(f"  {CYAN}  from moneymap.taxes import total_con_impuesto, tasa_fiscal{RESET}")
+    print(f"  {CYAN}  import moneymap.dataframepd  # activa df.moneymap{RESET}")
+    print(f"  {CYAN}  import moneymap.dataframepl as mm{RESET}")
     print(f"\n{CYAN}{'═' * ancho}{RESET}\n")
 
 
